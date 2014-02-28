@@ -18,4 +18,4 @@ typedef struct
 #endif
 void enqueue(Queue *queue, QNode *node);
 
-Queue *dequeue(Queue *queue);
+QNode *dequeue(Queue *queue);

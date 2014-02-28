@@ -17,7 +17,20 @@ void enqueue(Queue *queue, QNode *node)
 	queue->length++;
 }
 
-Queue *dequeue(Queue *queue)
+QNode *dequeue(Queue *queue)
 {
-	return queue;
+	QNode *data;
+	if (queue->length == 1)
+	{
+		data = queue->head;
+		queue->length--;
+		return data;
+	}
+
+	else {
+		data = queue->head;
+		queue->head = queue->head->next;
+		queue->length--;
+		return data;
+	}
 }
