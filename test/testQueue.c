@@ -43,7 +43,7 @@ void testDequeue()
 
 int main()
 {
-	// testEnqueue();
+	testEnqueue();
 	testDequeue();
 }
 
