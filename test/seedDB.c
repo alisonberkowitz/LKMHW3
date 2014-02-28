@@ -15,16 +15,13 @@ static void generate_test_data( mongo *conn ) {
   bson *p;
   bson **ps;
   int i, j;
-  int n=7;
+  int n=4;
 
-  Node nodes[7] = {
+  Node nodes[4] = {
     {.type="actor", .name="Kevin Bacon", .children={"Star Wars", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Michael Jordan", .children={"Shazzam", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Bugs Bunny", .children={"Shazzam", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Shaq", .children={"Shazzam", "Star Wars"}, .path={""}, 0, 2},
-    {.type="movie", .name="Star Wars", .children={"Kevin Bacon", "Shaq"}, .path={""}, 0, 2},
-    {.type="movie", .name="Space Jam", .children={"Kevin Bacon", "Michael Jordan", "Bugs Bunny"}, .path={""}, 0, 3},
-    {.type="movie", .name="Shazzam", .children={"Michael Jordan", "Bugs Bunny", "Shaq"}, .path={""}, 0, 3},
   };
 
   ps = ( bson ** )malloc( sizeof( bson * ) * n);
@@ -35,6 +32,7 @@ static void generate_test_data( mongo *conn ) {
     bson_append_new_oid( p, "_id" );
     bson_append_string( p, "type", nodes[i].type );
     bson_append_string( p, "name", nodes[i].name );
+    bson_append_int( p, "numberChildren", nodes[i].numberChildren );
     
     bson_append_start_array(p, "children");
     for (j = 0; j<(nodes[i].numberChildren); j++)

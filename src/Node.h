@@ -5,8 +5,8 @@ typedef struct
 {
   const char *type;
   const char *name;
-  char children[20][80];
-  char path[20][80];
+  const char *children[20];
+  char *path[20];
   int pathLength;
   int numberChildren;
 } Node;
