@@ -45,8 +45,8 @@ Node actorNode(char *name, mongo *conn)
 
 Node movieNode(char *name, mongo *conn)
 {
-	bson query[1];
-  	mongo_cursor cursor[1];
+	  bson query[1];
+    mongo_cursor cursor[1];
 
   	bson_init( query );
   	bson_append_start_object(query, "children");
