@@ -20,6 +20,10 @@ void enqueue(Queue *queue, QNode *node)
 QNode *dequeue(Queue *queue)
 {
 	QNode *data;
+	if (queue->length == 0)
+	{
+		fprintf(stderr, "%s\n", "Error: Dequeing from an empty queue");
+	}
 	if (queue->length == 1)
 	{
 		data = queue->head;
