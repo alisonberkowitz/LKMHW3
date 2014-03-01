@@ -3,6 +3,15 @@
 #include <string.h>
 #include "mongo.h"
 
+typedef struct {
+  char *type;
+  char *name;
+  char children[20][80];
+  char path[20][80];
+  int pathLength;
+  int numberChildren;
+} Node;
+
 int is_name(char *line) {
   if (*line != '\t'){
     return 1;
@@ -12,12 +21,13 @@ int is_name(char *line) {
   }
 }
 
-void parse() {
+void parse( mongo *conn ) {
   FILE *in_file = fopen("dummy.txt", "r");
   char line[100];
   char *p;
   char *name;
   char *movie;
+  int numberChildren;
   while(fgets(line,100,in_file)) {
     if (is_name(line)){
       p = strtok(line, "\t");
@@ -53,7 +63,7 @@ int main() {
       }
   }
 
-  parse();
+  parse( conn );
 
   mongo_destroy( conn );
 
