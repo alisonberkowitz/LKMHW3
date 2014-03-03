@@ -6,18 +6,22 @@
 
 void testQuery()
 {
-	Node *actorNode;
-	actorNode = actorNode(actorNode, "Shaq");
-	Node *movieNode = movieNode(movieNode, "Star Wars");
-	printf("actor name: %s actor type: %s number children:%d\n", actorNode->name, actorNode->type, actorNode->numberChildren);
-	for (int i=0; i<actorNode->numberChildren; i++)
+	mongo conn[1];
+	int status = mongo_client( conn, "127.0.0.1", 27017 );
+
+	Node *actor_node = new_Node();
+	actorNode(actor_node, "Shaq", conn);
+	Node *movie_node = new_Node();
+	movieNode(movie_node, "Star Wars", conn);
+	printf("actor name: %s actor type: %s number children:%d\n", actor_node->name, actor_node->type, actor_node->numberChildren);
+	for (int i=0; i<actor_node->numberChildren; i++)
 	{
-		printf("actor child: %s\n", actorNode->children[i]);
+		printf("actor child: %s\n", actor_node->children[i]);
 	}
-	printf("movie name: %s movie type: %s movie children:%d\n", movieNode->name, movieNode->type, movieNode->numberChildren);
-	for (int i=0; i<movieNode->numberChildren; i++)
+	printf("movie name: %s movie type: %s movie children:%d\n", movie_node->name, movie_node->type, movie_node->numberChildren);
+	for (int i=0; i<movie_node->numberChildren; i++)
 	{
-		printf("movie child: %s\n", movieNode->children[i]);
+		printf("movie child: %s\n", movie_node->children[i]);
 	}
 }
 

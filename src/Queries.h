@@ -3,5 +3,5 @@
 #include "Node.h"
 #include "mongo.h"
 
-Node *actorNode(char *name, mongo *conn);
-Node *movieNode(char *name, mongo *conn);
+void actorNode(Node *node, char *name, mongo *conn);
+void movieNode(Node *node, char *name, mongo *conn);

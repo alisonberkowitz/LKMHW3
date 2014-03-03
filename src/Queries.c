@@ -3,7 +3,7 @@
 #include "Node.h"
 #include "mongo.h"
 
-Node *actorNode(Node *node, char *name, mongo *conn)
+void actorNode(Node *node, char *name, mongo *conn)
 {
   bson query[1];
   mongo_cursor cursor[1];
@@ -15,8 +15,6 @@ Node *actorNode(Node *node, char *name, mongo *conn)
   mongo_cursor_init( cursor, conn, "test.seeddb" );
   mongo_cursor_set_query( cursor, query );
   
-  // Node *node = new_Node();
-
   int i=0;
   node->type = "actor";
   node->name = name;
@@ -40,11 +38,9 @@ Node *actorNode(Node *node, char *name, mongo *conn)
   }
   bson_destroy( query );
   mongo_cursor_destroy( cursor );
-
-  return node;
 }
 
-Node *movieNode(Node *node, char *name, mongo *conn)
+void movieNode(Node *node, char *name, mongo *conn)
 {
 	  bson query[1];
     mongo_cursor cursor[1];
@@ -61,7 +57,6 @@ Node *movieNode(Node *node, char *name, mongo *conn)
   	mongo_cursor_set_query( cursor, query );
 
   	int i = 0;
-    // Node *node = new_Node();
   	node->type = "movie";
   	node->name = name;
   	while( mongo_cursor_next( cursor ) == MONGO_OK ) {
@@ -77,5 +72,4 @@ Node *movieNode(Node *node, char *name, mongo *conn)
   	}
   	bson_destroy( query );
   	mongo_cursor_destroy( cursor );
-	return node;
 }
