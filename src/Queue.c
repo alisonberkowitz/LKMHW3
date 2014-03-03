@@ -67,7 +67,7 @@ void printQueue(Queue *queue)
 {
 	QNode *currentNode;
 	currentNode = queue->head;
-	for (int i=0; i<queue->length; i++)
+	for (int i=0; i<queue->length-1; i++)
 	{
 		printf("%s\n", currentNode->data->name);
 		currentNode = currentNode->next;
