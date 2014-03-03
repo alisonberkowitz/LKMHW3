@@ -6,7 +6,7 @@
 typedef struct {
   char *type;
   char *name;
-  char *children[20];
+  char **children; //char **children
   char path[20][80];
   int pathLength;
   int numberChildren;
@@ -24,10 +24,12 @@ int is_name(char *line) {
 void set_name(Node *n, char *guy) {
   n->numberChildren = 0;
   n->type = "actor";
+  n->name = (char*)malloc((strlen(guy)+1)*sizeof(char));
   strcpy(n->name, guy);
 }
 
 void add_child(Node *n, char *movie) {
+  n->children[n->numberChildren] = (char*)malloc((strlen(movie)+1)*sizeof(char));
   strcpy(n->children[n->numberChildren], movie);
   n->numberChildren = n->numberChildren +1;
 }
@@ -56,7 +58,7 @@ void parse( mongo *conn ) {
   printf("totalActors: %i\n", total);
   rewind(in_file);
 
-  Node nodes[total];
+  Node *nodes = (Node*) malloc(sizeof(Node)*total);
   int g = -1;
 
   while(fgets(line,100,in_file)) {
