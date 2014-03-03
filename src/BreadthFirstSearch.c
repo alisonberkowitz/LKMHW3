@@ -10,43 +10,49 @@
 Path *BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
-	Node startNode = actorNode(startActorName, conn);
-	QNode qStartNode = {.data=&startNode};
-	Queue frontier = {.length = 0};
+	Node *startNode = new_Node();
+	actorNode(startNode, startActorName, conn);
+
+	QNode *qStartNode = new_QNode();
+	qStartNode->data=startNode;
+	Queue *frontier = new_Queue();
 	
 	// Ignore Me For Now
 	Path *currentPath = malloc(sizeof(Path));
 	Path *defaultPath = malloc(sizeof(Path));
-	currentPath->length=0;
+	currentPath -> length=0;
 	defaultPath -> length = 0;
-	append(currentPath, startActorName);
-	startNode.path = currentPath;
+	// append(currentPath, startActorName);
+	// startNode.path = currentPath;
 	// This doesnt work
 	
-	enqueue(&frontier, &qStartNode);
-	while(frontier.length > 0)
+	enqueue(frontier, qStartNode);
+
+	while(frontier->length > 0)
 	{
-		Node *currentNode = dequeue(&frontier)->data;
+		Node *currentNode = new_Node();
+		currentNode = dequeue(frontier)->data;
 
 		if (currentNode->name == goalActorName) {
-			return currentNode->path;
+			return defaultPath;
 		}
-		printf("%d\n", currentNode->numberChildren);
-		printf("%s\n", currentNode->name);
+		// printf("%d\n", currentNode->numberChildren);
+		// printf("%s\n", currentNode->name);
 		for (int i = 0; i<currentNode->numberChildren; i++)
 		{
-			Node childNode;
+			Node *childNode = new_Node();
 			if (strcmp(currentNode->type, "actor") == 0)
 			{
-				childNode = actorNode(currentNode->children[i], conn);
+				actorNode(childNode, currentNode->children[i], conn);
 			}
 			else
 			{
-				childNode = movieNode(currentNode->children[i], conn);
+				movieNode(childNode, currentNode->children[i], conn);
 			}
-			printf("current node: %s child node: %s\n", currentNode->name, childNode.name);
-			QNode qChildNode = {.data=&childNode};
-			enqueue(&frontier, &qChildNode);
+			printf("current node: %s child node: %s\n", currentNode->name, childNode->name);
+			QNode *qChildNode = new_QNode();
+			qChildNode -> data = childNode;
+			enqueue(frontier, qChildNode);
 		}
 	}
 	

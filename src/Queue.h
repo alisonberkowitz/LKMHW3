@@ -16,6 +16,11 @@ typedef struct
 } Queue;
 
 #endif
+
+QNode *new_QNode();
+
+Queue *new_Queue();
+
 void enqueue(Queue *queue, QNode *node);
 
 QNode *dequeue(Queue *queue);
