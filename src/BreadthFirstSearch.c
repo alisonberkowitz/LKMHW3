@@ -23,11 +23,8 @@ Path *BFS(char *startActorName, char *goalActorName){
 	
 	map_t visited = hashmap_new();
 	enqueue(&frontier, &qStartNode);
-	// hashmap_put(visited, startNode.name, &startNode); // Todo add error handling
-	// while(frontier.length > 0)
 	while((frontier.length > 0) && (frontier.length<10))
 	{
-		// printQueue(&frontier);
 		QNode *currentQNode = dequeue(&frontier);
 		Node *currentNode = currentQNode->data;
 
@@ -39,13 +36,11 @@ Path *BFS(char *startActorName, char *goalActorName){
 			Node childNode;
 			if (strcmp(currentNode->type, "actor") == 0)
 			{
-				childNode = movieNode(currentNode->children[i], conn);
-
+				childNode = actorNode(currentNode->children[i], conn);
 			}
 			else
 			{
-				childNode = actorNode(currentNode->children[i], conn);
-				
+				childNode = movieNode(currentNode->children[i], conn);
 			}
 			printf("current node: %s child node: %s\n", currentNode->name, childNode.name);
 			QNode qChildNode = {.data=&childNode};
@@ -62,20 +57,5 @@ int main()
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Path *p;
 	p = BFS("Michael Jordan", "Shaq");
-	// printPath(p);
-	// for (int i =0; i<1; i++)
-	// {
-	// 	printf("%s\n", path);
-
-	// }
-
-
-	// printf("%s\n", node.name);
-	// printf("%s\n", node.type);
-	// printf("%d\n", node.numberChildren);
-	// for (int i=0; i<node.numberChildren; i++)
-	// {
-	// 	printf("%s\n", node.children[i]);
-	// }
 	return 0;
 }
