@@ -24,13 +24,15 @@ Path *BFS(char *startActorName, char *goalActorName){
 	// This doesnt work
 	
 	enqueue(&frontier, &qStartNode);
-	while((frontier.length > 0) && (frontier.length<10))
+	while(frontier.length > 0)
 	{
 		Node *currentNode = dequeue(&frontier)->data;
 
 		if (currentNode->name == goalActorName) {
 			return currentNode->path;
 		}
+		printf("%d\n", currentNode->numberChildren);
+		printf("%s\n", currentNode->name);
 		for (int i = 0; i<currentNode->numberChildren; i++)
 		{
 			Node childNode;
@@ -48,7 +50,7 @@ Path *BFS(char *startActorName, char *goalActorName){
 		}
 	}
 	
-	return defaultPath; // Todo make default
+	return defaultPath; // Todo make default path object
 }
 
 int main()
@@ -56,6 +58,6 @@ int main()
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Path *p;
-	p = BFS("Michael Jordan", "Shaq");
+	p = BFS("Kevin Bacon", "Shaq");
 	return 0;
 }
