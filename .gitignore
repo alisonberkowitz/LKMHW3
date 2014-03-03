@@ -1,3 +1,7 @@
 Makefile
 
 *.o
+
+actors.list
+
+dummy.txt
