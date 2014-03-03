@@ -5,12 +5,14 @@
 
 typedef struct
 {
-  const char *type;
-  const char *name;
-  const char *children[20];
-  Path *path;
-  int pathLength;
+  char *type;
+  char *name;
+  char **children; // For now lets assume that someone will have up to 100 children
   int numberChildren;
 } Node;
 
 #endif
+
+Node *new_Node();
+void free_Node(Node *node);
+void addChild(Node *parentNode, char *child);

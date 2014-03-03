@@ -3,46 +3,48 @@
 #include "Node.h"
 #include "mongo.h"
 
-Node actorNode(char *name, mongo *conn)
+Node *actorNode(Node *node, char *name, mongo *conn)
 {
-	bson query[1];
-    mongo_cursor cursor[1];
+  bson query[1];
+  mongo_cursor cursor[1];
 
-  	bson_init( query );
-  	bson_append_string( query, "name", name );
-  	bson_finish( query );
+  bson_init( query );
+  bson_append_string( query, "name", name );
+  bson_finish( query );
 
-  	mongo_cursor_init( cursor, conn, "test.seeddb" );
-  	mongo_cursor_set_query( cursor, query );
-  	Node node;
-  	int i=0;
-  	node.type = "actor";
-  	node.name = name;
-  	while( mongo_cursor_next( cursor ) == MONGO_OK ) {
-    	bson_iterator iterator[1];
-    	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "numberChildren" )) {
-        	node.numberChildren = bson_iterator_int( iterator );
-    	}
-    	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "children" )) {
-    		bson_iterator sub[1];
-    		bson_iterator_subiterator(iterator, sub);
-    		while(bson_iterator_more(sub))
-		  	{
-		    	if (bson_iterator_next(sub) != BSON_EOO)
-		    	{
-		      		node.children[i] = bson_iterator_string(sub);
-		      		i++;
-		    	}
-		  	}
+  mongo_cursor_init( cursor, conn, "test.seeddb" );
+  mongo_cursor_set_query( cursor, query );
+  
+  // Node *node = new_Node();
+
+  int i=0;
+  node->type = "actor";
+  node->name = name;
+  while( mongo_cursor_next( cursor ) == MONGO_OK ) {
+  	bson_iterator iterator[1];
+  	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "numberChildren" )) {
+      	node->numberChildren = bson_iterator_int( iterator );
+  	}
+  	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "children" )) {
+  		bson_iterator sub[1];
+  		bson_iterator_subiterator(iterator, sub);
+  		while(bson_iterator_more(sub))
+    	{
+      	if (bson_iterator_next(sub) != BSON_EOO)
+      	{
+        		node->children[i] = bson_iterator_string(sub);
+        		i++;
+      	}
     	}
   	}
-  	bson_destroy( query );
-  	mongo_cursor_destroy( cursor );
+  }
+  bson_destroy( query );
+  mongo_cursor_destroy( cursor );
 
-	return node;
+  return node;
 }
 
-Node movieNode(char *name, mongo *conn)
+Node *movieNode(Node *node, char *name, mongo *conn)
 {
 	  bson query[1];
     mongo_cursor cursor[1];
@@ -59,20 +61,19 @@ Node movieNode(char *name, mongo *conn)
   	mongo_cursor_set_query( cursor, query );
 
   	int i = 0;
-  	Node node;
-  	node.type = "movie";
-  	node.name = name;
+    // Node *node = new_Node();
+  	node->type = "movie";
+  	node->name = name;
   	while( mongo_cursor_next( cursor ) == MONGO_OK ) {
     	bson_iterator iterator[1];
     	bson_iterator subiterator[1];
     	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "name" )) {
     		if ( bson_find( subiterator, mongo_cursor_bson( cursor ), "name" )) {
-    			node.children[i] = bson_iterator_string( subiterator );
-    			node.numberChildren++;
+    			node->children[i] = bson_iterator_string( subiterator );
+    			node->numberChildren++;
     			i++;
     		}
     	}
-      printf("number children %d\n", node.numberChildren);    	    	
   	}
   	bson_destroy( query );
   	mongo_cursor_destroy( cursor );
