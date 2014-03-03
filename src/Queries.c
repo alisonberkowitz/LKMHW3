@@ -63,6 +63,7 @@ void movieNode(Node *node, char *name, mongo *conn)
     	bson_iterator subiterator[1];
     	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "name" )) {
     		if ( bson_find( subiterator, mongo_cursor_bson( cursor ), "name" )) {
+
           addChild(node, bson_iterator_string(subiterator));
     			// node->numberChildren++;
     			// i++;

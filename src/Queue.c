@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Queue.h"
+#include <string.h>
 
 void enqueue(Queue *queue, QNode *node)
 {
@@ -14,32 +15,21 @@ void enqueue(Queue *queue, QNode *node)
 		queue->tail->next = node;
 		queue->tail = node;
 	}
-	printf("queue:");
-	printQueue(queue);
-	printf("%s\n", node->data->name);
-
 	queue->length++;
 }
 
-QNode *dequeue(Queue *queue)
+void dequeue(QNode *data, Queue *queue)
 {
-	QNode *data;
 	if (queue->length == 0)
 	{
 		fprintf(stderr, "%s\n", "Error: Dequeing from an empty queue");
 	}
-	if (queue->length == 1)
-	{
-		data = queue->head;
-		queue->length--;
-		return data;
-	}
 
 	else {
-		data = queue->head;
+		memcpy(data, queue->head, sizeof(QNode));
+		// data = queue->head;
 		queue->head = queue->head->next;
 		queue->length--;
-		return data;
 	}
 }
 

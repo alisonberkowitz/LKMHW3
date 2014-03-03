@@ -26,36 +26,44 @@ Path *BFS(char *startActorName, char *goalActorName){
 	// startNode.path = currentPath;
 	// This doesnt work
 	
-	enqueue(frontier, qStartNode);
-
-	while(frontier->length > 0)
+	// enqueue(frontier, qStartNode);
+	int frontierLength = 0;
+	Node *frontierLst[20];
+	frontierLst[frontierLength] = startNode;
+	frontierLength++;
+	// while(frontier->length > 0)
+	while(frontierLength > 0 && frontierLength<20)
 	{
+		printQueue(frontier);
 		Node *currentNode = new_Node();
-		currentNode = dequeue(frontier)->data;
-
+		QNode *currentQNode = new_QNode();
+		// dequeue(currentQNode, frontier);
+		currentNode = frontierLst[--frontierLength];
+		// currentNode = currentQNode->data;
+		// printf("%s %s %d\n", currentNode->type, currentNode->name, currentNode->numberChildren);
 		if (currentNode->name == goalActorName) {
 			return defaultPath;
 		}
-		// printf("%d\n", currentNode->numberChildren);
-		// printf("%s\n", currentNode->name);
 		for (int i = 0; i<currentNode->numberChildren; i++)
 		{
 			Node *childNode = new_Node();
 			if (strcmp(currentNode->type, "actor") == 0)
 			{
-				actorNode(childNode, currentNode->children[i], conn);
-			}
-			else
-			{
 				movieNode(childNode, currentNode->children[i], conn);
 			}
-			printf("current node: %s child node: %s\n", currentNode->name, childNode->name);
+			else if (strcmp(currentNode->type, "movie") == 0)
+			{
+				actorNode(childNode, currentNode->children[i], conn);
+			}
+			else {
+				printf("%s\n", "error");
+			}
 			QNode *qChildNode = new_QNode();
-			qChildNode -> data = childNode;
-			enqueue(frontier, qChildNode);
+			qChildNode->data = childNode;
+			frontierLst[frontierLength++] = childNode; 
+			// enqueue(frontier, qChildNode);
 		}
 	}
-	
 	return defaultPath; // Todo make default path object
 }
 

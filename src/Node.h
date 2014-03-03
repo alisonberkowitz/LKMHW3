@@ -15,4 +15,4 @@ typedef struct
 
 Node *new_Node();
 void free_Node(Node *node);
-void addChild(Node *parentNode, char *child);
+void addChild(Node *parentNode, const char *child);

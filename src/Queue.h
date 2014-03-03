@@ -23,6 +23,6 @@ Queue *new_Queue();
 
 void enqueue(Queue *queue, QNode *node);
 
-QNode *dequeue(Queue *queue);
+void dequeue(QNode *data, Queue *queue);
 
 void printQueue(Queue *queue);
