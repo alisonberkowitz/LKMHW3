@@ -11,7 +11,7 @@ Node *new_Node()
 	Node *node = (Node *)malloc(sizeof(Node));
 	node->name = malloc(sizeof(char)*80);
 	node->type = malloc(sizeof(char)*TYPE_LENGTH);
-	node->children = (char**) malloc(MAX_NUMBER_CHILDREN+1*sizeof(char*));
+	node->children = malloc(MAX_NUMBER_CHILDREN+1*sizeof(char));
 	node->numberChildren = 0;
 	return node;
 }

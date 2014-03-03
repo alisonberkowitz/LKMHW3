@@ -10,8 +10,8 @@ void testQuery()
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 
 	Node *actor_node = new_Node();
-	actorNode(actor_node, "Shaq", conn);
 	Node *movie_node = new_Node();
+	actorNode(actor_node, "Shaq", conn);
 	movieNode(movie_node, "Star Wars", conn);
 	printf("actor name: %s actor type: %s number children:%d\n", actor_node->name, actor_node->type, actor_node->numberChildren);
 	for (int i=0; i<actor_node->numberChildren; i++)
