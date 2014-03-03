@@ -7,7 +7,7 @@
 #include "Hashmap.h"
 #include "Path.h"
 
-Path *BFS(char *startActorName, char *goalActorName){
+char **BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Node *startNode = new_Node();
@@ -23,14 +23,7 @@ Path *BFS(char *startActorName, char *goalActorName){
 	int x = 1; // Dummy variable for hashmap value
 	int y = 0;
 	// 
-	
-// 	Path Shit - TODO KILL
-	Path *currentPath = malloc(sizeof(Path));
-	Path *defaultPath = malloc(sizeof(Path));
-	currentPath -> length = 0;
-	defaultPath -> length = 0;
-//  PATH SUCKS
-	
+		
 	enqueue(frontier, qStartNode);
 	int error = hashmap_put(map, startNode->name, &x); //Todo add error checking
 
@@ -75,14 +68,14 @@ Path *BFS(char *startActorName, char *goalActorName){
 			}
 		}
 	}
-	return defaultPath; // Todo make default path object
+	return startNode->path;
 }
 
 int main()
 {
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
-	Path *p;
+	char **p;
 	p = BFS("Kevin Bacon", "Shaq");
 	return 0;
 }
