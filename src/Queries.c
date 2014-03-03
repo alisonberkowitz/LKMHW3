@@ -30,7 +30,6 @@ Node actorNode(char *name, mongo *conn)
 		  	{
 		    	if (bson_iterator_next(sub) != BSON_EOO)
 		    	{
-            printf("%s\n", bson_iterator_string(sub));
 		      		node.children[i] = bson_iterator_string(sub);
 		      		i++;
 		    	}
@@ -72,7 +71,8 @@ Node movieNode(char *name, mongo *conn)
     			node.numberChildren++;
     			i++;
     		}
-    	}    	    	
+    	}
+      printf("number children %d\n", node.numberChildren);    	    	
   	}
   	bson_destroy( query );
   	mongo_cursor_destroy( cursor );

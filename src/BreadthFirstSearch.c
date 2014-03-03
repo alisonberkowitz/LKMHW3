@@ -25,8 +25,7 @@ Path *BFS(char *startActorName, char *goalActorName){
 	enqueue(&frontier, &qStartNode);
 	while((frontier.length > 0) && (frontier.length<10))
 	{
-		QNode *currentQNode = dequeue(&frontier);
-		Node *currentNode = currentQNode->data;
+		Node *currentNode = dequeue(&frontier)->data;
 
 		if (currentNode->name == goalActorName) {
 			return currentNode->path;
