@@ -5,7 +5,6 @@
 #include "Queries.h"
 #include "Queue.h"
 #include "Hashmap.h"
-#include "Path.h"
 
 Node *BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking

@@ -1,5 +1,3 @@
-#include "Path.h"
-
 #ifndef Node_H
 #define Node_H
 
