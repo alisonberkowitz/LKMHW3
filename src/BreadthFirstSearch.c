@@ -14,14 +14,15 @@ Path *BFS(char *startActorName, char *goalActorName){
 	QNode qStartNode = {.data=&startNode};
 	Queue frontier = {.length = 0};
 	
+	// Ignore Me For Now
 	Path *currentPath = malloc(sizeof(Path));
 	Path *defaultPath = malloc(sizeof(Path));
 	currentPath->length=0;
 	defaultPath -> length = 0;
 	append(currentPath, startActorName);
 	startNode.path = currentPath;
+	// This doesnt work
 	
-	map_t visited = hashmap_new();
 	enqueue(&frontier, &qStartNode);
 	while((frontier.length > 0) && (frontier.length<10))
 	{
