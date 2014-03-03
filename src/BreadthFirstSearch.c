@@ -31,10 +31,9 @@ Path *BFS(char *startActorName, char *goalActorName){
 	// Node *frontierLst[20];
 	// frontierLst[frontierLength] = startNode;
 	// frontierLength++;
-	while((frontier->length) > 0 && (frontier->length < 10))
-	// while(frontierLength > 0 && frontierLength<20)
+	while((frontier->length) > 0 && (frontier->length < 5))
 	{
-		puts("current queue");
+		puts("CURRENT QUEUE");
 		printQueue(frontier);
 		Node *currentNode = new_Node();
 		QNode *currentQNode = new_QNode();
