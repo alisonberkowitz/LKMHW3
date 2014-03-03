@@ -16,6 +16,12 @@ Path *BFS(char *startActorName, char *goalActorName){
 	QNode *qStartNode = new_QNode();
 	qStartNode->data=startNode;
 	Queue *frontier = new_Queue();
+
+	// Hashmap stuff
+	map_t map = hashmap_new();
+	int x = 1; // Dummy variable for hashmap value
+	int y = 0;
+	// 
 	
 	// Ignore Me For Now
 	Path *currentPath = malloc(sizeof(Path));
@@ -27,20 +33,16 @@ Path *BFS(char *startActorName, char *goalActorName){
 	// This doesnt work
 	
 	enqueue(frontier, qStartNode);
-	// int frontierLength = 0;
-	// Node *frontierLst[20];
-	// frontierLst[frontierLength] = startNode;
-	// frontierLength++;
-	while((frontier->length) > 0 && (frontier->length < 5))
+	int error = hashmap_put(map, startNode->name, &x); //Todo add error checking
+
+	while((frontier->length) > 0)
 	{
-		puts("CURRENT QUEUE");
-		printQueue(frontier);
 		Node *currentNode = new_Node();
 		QNode *currentQNode = new_QNode();
 		dequeue(currentQNode, frontier);
-		// currentNode = frontierLst[--frontierLength];
 		currentNode = currentQNode->data;
-		if (currentNode->name == goalActorName) {
+		if (strcmp(currentNode->name, goalActorName) == 0) {
+			printf("%s\n", "actor found!");
 			return defaultPath;
 		}
 		for (int i = 0; i<currentNode->numberChildren; i++)
@@ -55,12 +57,17 @@ Path *BFS(char *startActorName, char *goalActorName){
 				actorNode(childNode, currentNode->children[i], conn);
 			}
 			else {
-				printf("%s\n", "error");
+				fprintf(stderr, "%s\n", "Type Error: Node type must be actor or movie");
 			}
 			QNode *qChildNode = new_QNode();
 			qChildNode->data = childNode;
-			// frontierLst[frontierLength++] = childNode; 
-			enqueue(frontier, qChildNode);
+			
+			error = hashmap_get(map, childNode->name, (void**)(&y));
+			if (error == MAP_MISSING)
+			{
+				enqueue(frontier, qChildNode);
+				error = hashmap_put(map, childNode->name, (void**)(&x));
+			}
 		}
 	}
 	return defaultPath; // Todo make default path object

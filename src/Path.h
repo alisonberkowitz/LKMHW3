@@ -16,5 +16,10 @@ typedef struct
 
 #endif
 
+Path *new_Path();
+
+void free_Path();
+
 void append(Path *path, char* data);
+
 void printPath(Path *path);

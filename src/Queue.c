@@ -27,7 +27,6 @@ void dequeue(QNode *data, Queue *queue)
 
 	else {
 		memcpy(data, queue->head, sizeof(QNode));
-		// data = queue->head;
 		queue->head = queue->head->next;
 		queue->length--;
 	}

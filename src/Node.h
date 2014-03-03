@@ -7,7 +7,7 @@ typedef struct
 {
   char *type;
   char *name;
-  char **children; // For now lets assume that someone will have up to 100 children
+  char **children;
   int numberChildren;
 } Node;
 
