@@ -26,21 +26,21 @@ Path *BFS(char *startActorName, char *goalActorName){
 	// startNode.path = currentPath;
 	// This doesnt work
 	
-	// enqueue(frontier, qStartNode);
-	int frontierLength = 0;
-	Node *frontierLst[20];
-	frontierLst[frontierLength] = startNode;
-	frontierLength++;
-	// while(frontier->length > 0)
-	while(frontierLength > 0 && frontierLength<20)
+	enqueue(frontier, qStartNode);
+	// int frontierLength = 0;
+	// Node *frontierLst[20];
+	// frontierLst[frontierLength] = startNode;
+	// frontierLength++;
+	while((frontier->length) > 0 && (frontier->length < 10))
+	// while(frontierLength > 0 && frontierLength<20)
 	{
+		puts("current queue");
 		printQueue(frontier);
 		Node *currentNode = new_Node();
 		QNode *currentQNode = new_QNode();
-		// dequeue(currentQNode, frontier);
-		currentNode = frontierLst[--frontierLength];
-		// currentNode = currentQNode->data;
-		// printf("%s %s %d\n", currentNode->type, currentNode->name, currentNode->numberChildren);
+		dequeue(currentQNode, frontier);
+		// currentNode = frontierLst[--frontierLength];
+		currentNode = currentQNode->data;
 		if (currentNode->name == goalActorName) {
 			return defaultPath;
 		}
@@ -60,8 +60,8 @@ Path *BFS(char *startActorName, char *goalActorName){
 			}
 			QNode *qChildNode = new_QNode();
 			qChildNode->data = childNode;
-			frontierLst[frontierLength++] = childNode; 
-			// enqueue(frontier, qChildNode);
+			// frontierLst[frontierLength++] = childNode; 
+			enqueue(frontier, qChildNode);
 		}
 	}
 	return defaultPath; // Todo make default path object
