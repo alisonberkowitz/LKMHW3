@@ -6,7 +6,7 @@
 Node actorNode(char *name, mongo *conn)
 {
 	bson query[1];
-  	mongo_cursor cursor[1];
+    mongo_cursor cursor[1];
 
   	bson_init( query );
   	bson_append_string( query, "name", name );

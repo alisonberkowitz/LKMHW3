@@ -19,3 +19,5 @@ typedef struct
 void enqueue(Queue *queue, QNode *node);
 
 QNode *dequeue(Queue *queue);
+
+void printQueue(Queue *queue);
