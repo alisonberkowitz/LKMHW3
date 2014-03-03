@@ -7,7 +7,7 @@
 #include "Hashmap.h"
 #include "Path.h"
 
-char **BFS(char *startActorName, char *goalActorName){
+Node *BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Node *startNode = new_Node();
@@ -34,12 +34,7 @@ char **BFS(char *startActorName, char *goalActorName){
 		dequeue(currentQNode, frontier);
 		currentNode = currentQNode->data;
 		if (strcmp(currentNode->name, goalActorName) == 0) {
-			printf("%s\n", "actor found!");
-			for (int i=0; i<currentNode->pathLength; i++)
-			{
-				printf("%s\n", currentNode->path[i]);
-			}
-			return defaultPath;
+			return currentNode;
 		}
 		for (int i = 0; i<currentNode->numberChildren; i++)
 		{
@@ -68,14 +63,16 @@ char **BFS(char *startActorName, char *goalActorName){
 			}
 		}
 	}
-	return startNode->path;
+	return startNode;
 }
 
 int main()
 {
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
-	char **p;
+	Node *p;
 	p = BFS("Kevin Bacon", "Shaq");
+	for (int i = 0; i < p->pathLength; i++)
+		printf("%s\n", p->path[i]);
 	return 0;
 }
