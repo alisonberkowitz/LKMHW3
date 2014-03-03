@@ -12,6 +12,7 @@ Path *BFS(char *startActorName, char *goalActorName){
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Node *startNode = new_Node();
 	actorNode(startNode, startActorName, conn);
+	addToPath(startNode, startNode->name);
 
 	QNode *qStartNode = new_QNode();
 	qStartNode->data=startNode;
@@ -23,14 +24,12 @@ Path *BFS(char *startActorName, char *goalActorName){
 	int y = 0;
 	// 
 	
-	// Ignore Me For Now
+// 	Path Shit - TODO KILL
 	Path *currentPath = malloc(sizeof(Path));
 	Path *defaultPath = malloc(sizeof(Path));
-	currentPath -> length=0;
+	currentPath -> length = 0;
 	defaultPath -> length = 0;
-	// append(currentPath, startActorName);
-	// startNode.path = currentPath;
-	// This doesnt work
+//  PATH SUCKS
 	
 	enqueue(frontier, qStartNode);
 	int error = hashmap_put(map, startNode->name, &x); //Todo add error checking
@@ -43,6 +42,10 @@ Path *BFS(char *startActorName, char *goalActorName){
 		currentNode = currentQNode->data;
 		if (strcmp(currentNode->name, goalActorName) == 0) {
 			printf("%s\n", "actor found!");
+			for (int i=0; i<currentNode->pathLength; i++)
+			{
+				printf("%s\n", currentNode->path[i]);
+			}
 			return defaultPath;
 		}
 		for (int i = 0; i<currentNode->numberChildren; i++)
@@ -59,6 +62,8 @@ Path *BFS(char *startActorName, char *goalActorName){
 			else {
 				fprintf(stderr, "%s\n", "Type Error: Node type must be actor or movie");
 			}
+
+			buildChildPath(childNode, currentNode);
 			QNode *qChildNode = new_QNode();
 			qChildNode->data = childNode;
 			
