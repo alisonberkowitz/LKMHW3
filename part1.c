@@ -6,7 +6,7 @@
 typedef struct {
   char *type;
   char *name;
-  char children[20][80];
+  char *children[20];
   char path[20][80];
   int pathLength;
   int numberChildren;
@@ -21,32 +21,67 @@ int is_name(char *line) {
   }
 }
 
+void set_name(Node *n, char *guy) {
+  n->numberChildren = 0;
+  n->type = "actor";
+  strcpy(n->name, guy);
+}
+
+void add_child(Node *n, char *movie) {
+  strcpy(n->children[n->numberChildren], movie);
+  n->numberChildren = n->numberChildren +1;
+}
+
+int totalActors(FILE *in_file) {
+  char line[100];
+  int count = 0;
+  while(fgets(line,100,in_file)) {
+    if (is_name(line)){
+      count = count + 1;
+    }
+  }
+  return count;
+}
+
 void parse( mongo *conn ) {
   FILE *in_file = fopen("dummy.txt", "r");
   char line[100];
   char *p;
-  char *name;
+  char *guy;
   char *movie;
   int numberChildren;
+  int total;
+
+  total = totalActors(in_file);
+  printf("totalActors: %i\n", total);
+  rewind(in_file);
+
+  Node nodes[total];
+  int g = -1;
+
   while(fgets(line,100,in_file)) {
-    if (is_name(line)){
+    if (is_name(line)) {
+      g = g+1;
       p = strtok(line, "\t");
-      name = p;
-      printf("name: %s\n", name);
-      // add it to the db
+      guy = p;
+      set_name(&nodes[g], guy);
+      printf("name: %s\n", nodes[g].name);
 
       p = strtok(NULL, "\t");
       movie = p;
-      printf("movie: %s\n", movie );
-      // add it as child of name
+      add_child(&nodes[g], movie);
+      printf("movie: %s\n", nodes[g].children[0] );
     }
     else {
       p = strtok(line, "\t");
       movie = p;
-      printf("movie: %s\n", movie );
-      // add it as a child of name
+      add_child(&nodes[g], movie);
+      printf("name: %s\n, children:", nodes[g].name);
+      int i;
+      for (i=0; i<nodes[g].numberChildren; i++) {
+        printf("%s\n", nodes[g].children[i]);
+      }
     }
-
   }
   fclose(in_file);
 }
