@@ -5,7 +5,7 @@
 
 #define MAX_NAME_LENGTH 80
 #define TYPE_LENGTH 10
-#define MAX_NUMBER_CHILDREN 100
+#define MAX_NUMBER_CHILDREN 1000
 #define MAX_PATH_LENGTH 25
 
 Node *new_Node()

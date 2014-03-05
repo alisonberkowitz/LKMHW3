@@ -21,7 +21,9 @@ static void generate_test_data( mongo *conn ) {
     {.type="actor", .name="Kevin Bacon", .children={"Star Wars", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Michael Jordan", .children={"Shazzam", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Bugs Bunny", .children={"Shazzam", "Space Jam"}, .path={""}, 0, 2},
-    {.type="actor", .name="Shaq", .children={"Shazzam", "Star Wars"}, .path={""}, 0, 2},
+    {.type="actor", .name="Shaq", .children={"Shazzam", "Star Wars", "Juno"}, .path={""}, 0, 2},
+    {.type="actor", .name="Ellen Page", .children={"Juno", "Lincoln"}, .path={""}, 0, 2},
+    {.type="actor", .name="Daniel Day Lewis", .children={"Lincoln"}, .path={""}, 0, 2},
   };
 
   ps = ( bson ** )malloc( sizeof( bson * ) * n);
