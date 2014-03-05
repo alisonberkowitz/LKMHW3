@@ -15,15 +15,15 @@ static void generate_test_data( mongo *conn ) {
   bson *p;
   bson **ps;
   int i, j;
-  int n=4;
+  int n=6;
 
-  Node nodes[4] = {
+  Node nodes[6] = {
     {.type="actor", .name="Kevin Bacon", .children={"Star Wars", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Michael Jordan", .children={"Shazzam", "Space Jam"}, .path={""}, 0, 2},
     {.type="actor", .name="Bugs Bunny", .children={"Shazzam", "Space Jam"}, .path={""}, 0, 2},
-    {.type="actor", .name="Shaq", .children={"Shazzam", "Star Wars", "Juno"}, .path={""}, 0, 2},
+    {.type="actor", .name="Shaq", .children={"Shazzam", "Star Wars", "Juno"}, .path={""}, 0, 3},
     {.type="actor", .name="Ellen Page", .children={"Juno", "Lincoln"}, .path={""}, 0, 2},
-    {.type="actor", .name="Daniel Day Lewis", .children={"Lincoln"}, .path={""}, 0, 2},
+    {.type="actor", .name="Daniel Day Lewis", .children={"Lincoln"}, .path={""}, 0, 1},
   };
 
   ps = ( bson ** )malloc( sizeof( bson * ) * n);

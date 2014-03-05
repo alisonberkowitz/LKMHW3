@@ -28,8 +28,6 @@ Node *BFS(char *startActorName, char *goalActorName){
 
 	while((frontier->length) > 0)
 	{
-		puts("frontier");
-		printQueue();
 		Node *currentNode = new_Node();
 		QNode *currentQNode = new_QNode();
 		dequeue(currentQNode, frontier);
@@ -63,6 +61,9 @@ Node *BFS(char *startActorName, char *goalActorName){
 				error = hashmap_put(map, childNode->name, (void**)(&x));
 			}
 		}
+		// printf("%s\n", currentNode->name);
+		free_Node(currentNode);
+		free_QNode(currentQNode);
 	}
 	return startNode;
 }
@@ -72,7 +73,7 @@ int main()
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Node *p;
-	p = BFS("Kevin Bacon", "Shaq");
+	p = BFS("Kevin Bacon", "Daniel Day Lewis");
 	for (int i = 0; i < p->pathLength; i++)
 		printf("%s\n", p->path[i]);
 	return 0;

@@ -42,8 +42,6 @@ QNode *new_QNode()
 
 void free_QNode(QNode *qNode)
 {
-	free(qNode->data);
-	free(qNode->next);
 	free(qNode);
 }
 
