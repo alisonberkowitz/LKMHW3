@@ -13,7 +13,7 @@ int main() {
         case MONGO_CONN_NOT_MASTER: printf( "not master\n" ); return 1;
       }
   }
-  mongo_cmd_drop_collection( conn, "test", "seeddb", NULL); 
+  mongo_cmd_drop_collection( conn, "test", "nodes", NULL); 
   mongo_destroy( conn );
 
   return 0;

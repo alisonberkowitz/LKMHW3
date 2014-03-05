@@ -5,13 +5,13 @@
 #include "Queries.h"
 #include "Queue.h"
 #include "Hashmap.h"
-#include "Path.h"
 
-Path *BFS(char *startActorName, char *goalActorName){
+Node *BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
 	Node *startNode = new_Node();
 	actorNode(startNode, startActorName, conn);
+	addToPath(startNode, startNode->name);
 
 	QNode *qStartNode = new_QNode();
 	qStartNode->data=startNode;
@@ -22,16 +22,7 @@ Path *BFS(char *startActorName, char *goalActorName){
 	int x = 1; // Dummy variable for hashmap value
 	int y = 0;
 	// 
-	
-	// Ignore Me For Now
-	Path *currentPath = malloc(sizeof(Path));
-	Path *defaultPath = malloc(sizeof(Path));
-	currentPath -> length=0;
-	defaultPath -> length = 0;
-	// append(currentPath, startActorName);
-	// startNode.path = currentPath;
-	// This doesnt work
-	
+		
 	enqueue(frontier, qStartNode);
 	int error = hashmap_put(map, startNode->name, &x); //Todo add error checking
 
@@ -42,8 +33,7 @@ Path *BFS(char *startActorName, char *goalActorName){
 		dequeue(currentQNode, frontier);
 		currentNode = currentQNode->data;
 		if (strcmp(currentNode->name, goalActorName) == 0) {
-			printf("%s\n", "actor found!");
-			return defaultPath;
+			return currentNode;
 		}
 		for (int i = 0; i<currentNode->numberChildren; i++)
 		{
@@ -59,6 +49,8 @@ Path *BFS(char *startActorName, char *goalActorName){
 			else {
 				fprintf(stderr, "%s\n", "Type Error: Node type must be actor or movie");
 			}
+
+			buildChildPath(childNode, currentNode);
 			QNode *qChildNode = new_QNode();
 			qChildNode->data = childNode;
 			
@@ -69,15 +61,20 @@ Path *BFS(char *startActorName, char *goalActorName){
 				error = hashmap_put(map, childNode->name, (void**)(&x));
 			}
 		}
+		// printf("%s\n", currentNode->name);
+		free_Node(currentNode);
+		free_QNode(currentQNode);
 	}
-	return defaultPath; // Todo make default path object
+	return startNode;
 }
 
 int main()
 {
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
-	Path *p;
-	p = BFS("Kevin Bacon", "Shaq");
+	Node *p;
+	p = BFS("Kevin Bacon", "Daniel Day Lewis");
+	for (int i = 0; i < p->pathLength; i++)
+		printf("%s\n", p->path[i]);
 	return 0;
 }

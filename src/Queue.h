@@ -21,6 +21,8 @@ QNode *new_QNode();
 
 Queue *new_Queue();
 
+void free_QNode(QNode *qNode);
+
 void enqueue(Queue *queue, QNode *node);
 
 void dequeue(QNode *data, Queue *queue);

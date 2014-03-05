@@ -12,7 +12,7 @@ void actorNode(Node *node, char *name, mongo *conn)
   bson_append_string( query, "name", name );
   bson_finish( query );
 
-  mongo_cursor_init( cursor, conn, "test.seeddb" );
+  mongo_cursor_init( cursor, conn, "test.nodes" );
   mongo_cursor_set_query( cursor, query );
   
   int i=0;
