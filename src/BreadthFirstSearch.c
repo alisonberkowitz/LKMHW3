@@ -28,6 +28,8 @@ Node *BFS(char *startActorName, char *goalActorName){
 
 	while((frontier->length) > 0)
 	{
+		puts("frontier");
+		printQueue();
 		Node *currentNode = new_Node();
 		QNode *currentQNode = new_QNode();
 		dequeue(currentQNode, frontier);
