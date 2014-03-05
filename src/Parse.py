@@ -76,6 +76,7 @@ class DatabaseService(object):
 	def createNode(self, node):
 		nodes = self._db.nodes
 		nodes.insert({'name':node.name, 'children':node.children, 'type':node.nodeType, 'numberChildren':node.numberChildren})
+		nodes.ensure_index('name')
 
 		
 

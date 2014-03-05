@@ -12,7 +12,7 @@ void actorNode(Node *node, char *name, mongo *conn)
   bson_append_string( query, "name", name );
   bson_finish( query );
 
-  mongo_cursor_init( cursor, conn, "test.nodes" );
+  mongo_cursor_init( cursor, conn, "test.seeddb" );
   mongo_cursor_set_query( cursor, query );
   
   int i=0;
@@ -20,9 +20,6 @@ void actorNode(Node *node, char *name, mongo *conn)
   node->name = name;
   while( mongo_cursor_next( cursor ) == MONGO_OK ) {
   	bson_iterator iterator[1];
-  	// if ( bson_find( iterator, mongo_cursor_bson( cursor ), "numberChildren" )) {
-      	// node->numberChildren = bson_iterator_int( iterator );
-  	// }
   	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "children" )) {
   		bson_iterator sub[1];
   		bson_iterator_subiterator(iterator, sub);
@@ -63,10 +60,7 @@ void movieNode(Node *node, char *name, mongo *conn)
     	bson_iterator subiterator[1];
     	if ( bson_find( iterator, mongo_cursor_bson( cursor ), "name" )) {
     		if ( bson_find( subiterator, mongo_cursor_bson( cursor ), "name" )) {
-
           addChild(node, bson_iterator_string(subiterator));
-    			// node->numberChildren++;
-    			// i++;
     		}
     	}
   	}
