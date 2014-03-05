@@ -55,8 +55,20 @@ void dequeue(QNode *data, Queue *queue)
 QNode *new_QNode()
 {
 	QNode *qNode = malloc(sizeof(QNode));
+	if (qNode == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	qNode->data = malloc(sizeof(Node));
+	if (qNode->data == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
   	qNode->next = malloc(sizeof(QNode));
+	if (qNode->next == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
   	return qNode;
 }
 
@@ -76,9 +88,21 @@ void free_QNode(QNode *qNode)
 Queue *new_Queue()
 {
 	Queue *queue = malloc(sizeof(Queue));
+	if (queue == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	queue->length = 0;
 	queue->head = malloc(sizeof(QNode));
+	if (queue->head == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	queue->tail = malloc(sizeof(QNode));
+	if (queue->tail == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	return queue;
 }
 

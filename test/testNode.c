@@ -1,8 +1,16 @@
+/*
+    Copyright 2013 Nathan Lintz and Alison Berkowitz
+    Test cases for Node implementation
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
-
 #include "../src/Node.h"
 
+
+
+/* Creates some fake nodes and prints their attributes to make sure our node implemenation works
+*/
 void nodeTest(){
 	Node *node1 = new_Node();
 	node1->name = "nathan";
@@ -15,8 +23,11 @@ void nodeTest(){
 	addToPath(node1, "skurp");
 	addToPath(node1, "alert");
 	buildChildPath(node2, node1);
-	printf("node name: %s, node type: %s child1 %s child2 %s path %s path2 %s \n", node1->name, node1->type, node1->children[0], node1->children[1], node1->path[0], node1->path[1]);
-	printf("node name: %s path %s path2 %s path3 %s \n", node2->name, node2->path[0], node2->path[1], node2->path[2]);
+	printf("node name: %s, node type: %s child1 %s child2 %s path %s path2 %s \n", 
+		node1->name, node1->type, node1->children[0], node1->children[1], 
+		node1->path[0], node1->path[1]);
+	printf("node name: %s path %s path2 %s path3 %s \n", 
+		node2->name, node2->path[0], node2->path[1], node2->path[2]);
 }
 
 int main(){

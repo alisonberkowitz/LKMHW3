@@ -20,10 +20,30 @@
 Node *new_Node()
 {
 	Node *node = (Node *)malloc(sizeof(Node));
+	if (node == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	node->name = (char *)malloc(sizeof(char)*MAX_NAME_LENGTH);
+	if (node->name == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	node->type = (char *)malloc(sizeof(char)*TYPE_LENGTH);
+	if (node->type == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	node->children = (char **)malloc(MAX_NUMBER_CHILDREN*sizeof(char*));
+	if (node->children == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	node->path = (char **)malloc(MAX_PATH_LENGTH*sizeof(char*));
+	if (node->path == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	node->numberChildren = 0;
 	node->pathLength = 0;
 	return node;
@@ -41,6 +61,10 @@ void addChild(Node *parentNode, const char *child)
 {
 	parentNode->children[parentNode->numberChildren] = 
 		malloc(sizeof(char)*(strlen(child))+1);
+	if (parentNode->children[parentNode->numberChildren] == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	strcpy(parentNode->children[parentNode->numberChildren], child);
 	parentNode->numberChildren++;
 }
@@ -55,6 +79,10 @@ void addToPath(Node *parentNode, const char *child)
 {
 	parentNode->path[parentNode->pathLength] = 
 		malloc(sizeof(char)*(strlen(child)+1));
+	if (parentNode->path[parentNode->pathLength] == NULL) {
+        fprintf(stderr, "Malloc failed\n");
+        exit(1);
+    }
 	strcpy(parentNode->path[parentNode->pathLength], child);
 	parentNode->pathLength++;
 }

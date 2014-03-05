@@ -23,6 +23,13 @@
 Node *BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
+	if( status != MONGO_OK ) {
+      switch ( conn->err ) {
+        case MONGO_CONN_NO_SOCKET:  printf( "no socket\n" ); return 1;
+        case MONGO_CONN_FAIL:       printf( "connection failed\n" ); return 1;
+        case MONGO_CONN_NOT_MASTER: printf( "not master\n" ); return 1;
+      }
+  	}
 	Node *startNode = new_Node();
 	actorNode(startNode, startActorName, conn);
 	addToPath(startNode, startNode->name);
@@ -37,18 +44,28 @@ Node *BFS(char *startActorName, char *goalActorName){
 	int y = 0;
 	// 
 		
-	enqueue(frontier, qStartNode);
+	enqueue(frontier, qStartNode); //Enqueue a start node
 	int error = hashmap_put(map, startNode->name, &x);
+	if (error == MAP_OMEM)
+	{
+		fprintf(stderr, "%s\n", "Map out of memory");
+	}
+	if (error == MAP_FULL)
+	{
+		fprintf(stderr, "%s\n", "Map full");
+	}
 
 	while((frontier->length) > 0)
 	{
 		Node *currentNode = new_Node();
 		QNode *currentQNode = new_QNode();
-		dequeue(currentQNode, frontier);
+		dequeue(currentQNode, frontier); // Dequeue the head
 		currentNode = currentQNode->data;
+		// note: no errors are defined for strcmp
 		if (strcmp(currentNode->name, goalActorName) == 0) {
 			return currentNode;
 		}
+		// Get the nodes children and enqueue them
 		for (int i = 0; i<currentNode->numberChildren; i++)
 		{
 			Node *childNode = new_Node();
@@ -64,19 +81,29 @@ Node *BFS(char *startActorName, char *goalActorName){
 				fprintf(stderr, 
 					"%s\n", "Type Error: Node type must be actor or movie");
 			}
-
-			buildChildPath(childNode, currentNode);
+			// Add the parents path to the child so we can get the whole path 
+			// between the start and end actor
+			buildChildPath(childNode, currentNode); 
 			QNode *qChildNode = new_QNode();
 			qChildNode->data = childNode;
 			
+			// Ignore nodes we've already visited
 			error = hashmap_get(map, childNode->name, (void**)(&y));
+			if (error == MAP_OMEM)
+			{
+				fprintf(stderr, "%s\n", "Map out of memory");
+			}
+			if (error == MAP_FULL)
+			{
+				fprintf(stderr, "%s\n", "Map full");
+			}
 			if (error == MAP_MISSING)
 			{
-				enqueue(frontier, qChildNode);
-				error = hashmap_put(map, childNode->name, (void**)(&x));
+				enqueue(frontier, qChildNode); // Enqueue the children
+				// Put the node in the hashmap so we dont visit it again
+				error = hashmap_put(map, childNode->name, (void**)(&x)); 
 			}
 		}
-		// printf("%s\n", currentNode->name);
 		free_Node(currentNode);
 		free_QNode(currentQNode);
 	}
@@ -90,8 +117,15 @@ Daniel Day lewis for the test data in test/seedDB
 */
 int main()
 {
-	mongo conn[1]; // TODO add error checking
+	mongo conn[1];
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
+	if( status != MONGO_OK ) {
+	  switch ( conn->err ) {
+	    case MONGO_CONN_NO_SOCKET:  printf( "no socket\n" ); return 1;
+	    case MONGO_CONN_FAIL:       printf( "connection failed\n" ); return 1;
+	    case MONGO_CONN_NOT_MASTER: printf( "not master\n" ); return 1;
+	  }
+	}
 	Node *p;
 	p = BFS("Kevin Bacon", "Daniel Day Lewis");
 	for (int i = 0; i < p->pathLength; i++)

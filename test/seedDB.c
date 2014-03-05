@@ -1,7 +1,14 @@
+/*
+    Copyright 2013 Nathan Lintz and Alison Berkowitz
+    Creates dummy test data for the BFS and puts it into the mongo database
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "mongo.h"
 
+/* Struct representing a movie or an actor
+*/
 typedef struct {
   char *type;
   char *name;
@@ -11,6 +18,10 @@ typedef struct {
   int numberChildren;
 } Node;
 
+/* Generates test nodes and puts them into the database
+
+    *conn: a connection to the mongo database
+*/
 static void generate_test_data( mongo *conn ) {
   bson *p;
   bson **ps;
@@ -57,6 +68,9 @@ static void generate_test_data( mongo *conn ) {
   }
 }
 
+/* Useful debugging feature to print all nodes in a given collection
+    *conn: a connection to the mongo database
+*/
 static void display_graph( mongo *conn) {
   mongo_cursor cursor[1];
   mongo_cursor_init( cursor, conn, "test.seeddb" );

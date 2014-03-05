@@ -1,3 +1,8 @@
+/*
+    Copyright 2013 Nathan Lintz and Alison Berkowitz
+    Test cases for hashmap implementation
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
