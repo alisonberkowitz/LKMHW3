@@ -17,7 +17,7 @@ To process a file of actor names, go to the imdb website and find the actors.lis
 
 ##Files
 ## src/
-- BreadthFirstSearch - Contains the query for running a breadth first traversal on the actors graph, test function for a dummy dataset is in the main
+- BreadthFirstSearch.c - Contains the query for running a breadth first traversal on the actors graph, test function for a dummy dataset is in the main
 - Hashmap.c/Hashmap.h - Hashmap implementation we got from https://github.com/petewarden/c_hashmap
 - Node.c/Node.h - Node model we used to represent an actor or a movie
 - Parse.py - Python parser for the actors list dataset

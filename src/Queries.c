@@ -1,8 +1,19 @@
+/*
+    Copyright 2013 Nathan Lintz and Alison Berkowitz
+    Methods for querying the mongo database by actor name or movie name
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "Node.h"
 #include "mongo.h"
 
+/* Searches for an actor by name and puts the data in a node
+
+   *node: node to put the actor data into 
+   *conn: mongo connection
+
+*/
 void actorNode(Node *node, char *name, mongo *conn)
 {
   bson query[1];
@@ -36,6 +47,12 @@ void actorNode(Node *node, char *name, mongo *conn)
   mongo_cursor_destroy( cursor );
 }
 
+/* Searches for an movie by name and puts the data in a node
+
+   *node: node to put the movie data into 
+   *conn: mongo connection
+
+*/
 void movieNode(Node *node, char *name, mongo *conn)
 {
 	  bson query[1];

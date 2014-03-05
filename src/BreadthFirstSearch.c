@@ -1,3 +1,8 @@
+/*
+    Copyright 2013 Nathan Lintz and Alison Berkowitz
+    Breadth First Search Traversal for actor-movie connections
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "Node.h"
@@ -6,6 +11,15 @@
 #include "Queue.h"
 #include "Hashmap.h"
 
+/* Runs a breadth first search for actor-movie paths between any two actors 
+	in our database
+
+   startActorName: string for the starting actor in the path
+   goalActorName: string for the last actor in the path
+
+   returns a node whose path is the shortest path between the start and 
+   ending actor
+*/
 Node *BFS(char *startActorName, char *goalActorName){
 	mongo conn[1]; // TODO add error checking
 	int status = mongo_client( conn, "127.0.0.1", 27017 );
@@ -24,7 +38,7 @@ Node *BFS(char *startActorName, char *goalActorName){
 	// 
 		
 	enqueue(frontier, qStartNode);
-	int error = hashmap_put(map, startNode->name, &x); //Todo add error checking
+	int error = hashmap_put(map, startNode->name, &x);
 
 	while((frontier->length) > 0)
 	{
@@ -47,7 +61,8 @@ Node *BFS(char *startActorName, char *goalActorName){
 				actorNode(childNode, currentNode->children[i], conn);
 			}
 			else {
-				fprintf(stderr, "%s\n", "Type Error: Node type must be actor or movie");
+				fprintf(stderr, 
+					"%s\n", "Type Error: Node type must be actor or movie");
 			}
 
 			buildChildPath(childNode, currentNode);
@@ -68,6 +83,11 @@ Node *BFS(char *startActorName, char *goalActorName){
 	return startNode;
 }
 
+/* Runs a breadth first search for actor-movie paths between Kevin Bacon and 
+Daniel Day lewis for the test data in test/seedDB
+
+   prints the path between these actors
+*/
 int main()
 {
 	mongo conn[1]; // TODO add error checking
