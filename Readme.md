@@ -1,6 +1,6 @@
-# Alison Berkowitz - Nathan Lintz
-# Software Systems 2013
 # 6 Degrees of Separation Prototype
+## Alison Berkowitz - Nathan Lintz
+## Software Systems 2013
 
 # Getting started
 To process a file of actor names, go to the imdb website and find the actors.list file. Remove all headers from the file so that the top line is the first actor to movie relationship. Run parse.py to put all of the data in the database. You can run the make commands for BFS and Queries to get data from the database. Remember to change the source of parse and queries so they use the same mongo database. You can also run make seedDB && ./build/test_seed_DB to seed the database with some test data then run make BFS && ./build/BFS to run the breadth first traversal on some sample data.
