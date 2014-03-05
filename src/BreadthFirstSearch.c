@@ -40,7 +40,8 @@ Node *BFS(char *startActorName, char *goalActorName){
 
 	// Hashmap stuff
 	map_t map = hashmap_new();
-	int x = 1; // Dummy variable for hashmap value
+	// Dummy variables for hashmap value -> hashmap get needs a place to put the resulting value for a key
+	int x = 1;
 	int y = 0;
 	// 
 		
