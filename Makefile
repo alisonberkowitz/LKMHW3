@@ -38,4 +38,3 @@ testQuery: src/Node.h src/Queries.h
 
 BFS: src/BreadthFirstSearch.c src/BreadthFirstSearch.h src/Node.h src/Queries.h src/Queue.h src/Hashmap.h
 	gcc --std=gnu99 -I$(LIB) $(LIB)/*.c src/BreadthFirstSearch.c src/Node.c src/Queries.c src/Queue.c src/Hashmap.c -o build/BFS
->>>>>>> 9f9615aa62f4280fb6437df6e3405f74b0e2da52
