@@ -14,6 +14,7 @@ To process a file of actor names, go to the imdb website and find the actors.lis
 - build/ - contains object files from compiled sources
 - src/ - contains source files for all of our files
 - test/ - contains test scripts for our files
+- part1.c - Our attempt at writing a parser in C. It almost worked but we switched over to python (see src/Parse.py)
 
 ##Files
 ## src/
