@@ -1,7 +1,8 @@
 /*
     Copyright 2013 Nathan Lintz and Alison Berkowitz
     This file contains parsing logic and database logic for putting a 
-    dataset of actors and movies into a mongo database
+    dataset of actors and movies into a mongo database.
+    We didn't end up using this because we ran into memory management issues
 */
 
 #include <stdio.h>
